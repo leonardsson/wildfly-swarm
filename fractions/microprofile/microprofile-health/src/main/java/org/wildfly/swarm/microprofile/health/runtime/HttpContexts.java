@@ -60,16 +60,16 @@ public class HttpContexts implements HttpHandler {
 
     @Override
     public void handleRequest(HttpServerExchange exchange) throws Exception {
-        if (NODE.equals(exchange.getRequestPath())) {
+        if ((monitor.getContextPath() + NODE).equals(exchange.getRequestPath())) {
             nodeInfo(exchange);
             return;
-        } else if (HEAP.equals(exchange.getRequestPath())) {
+        } else if ((monitor.getContextPath() + HEAP).equals(exchange.getRequestPath())) {
             heap(exchange);
             return;
-        } else if (THREADS.equals(exchange.getRequestPath())) {
+        } else if ((monitor.getContextPath() + THREADS).equals(exchange.getRequestPath())) {
             threads(exchange);
             return;
-        } else if (HEALTH.equals(exchange.getRequestPath())) {
+        } else if ((monitor.getContextPath() + HEALTH).equals(exchange.getRequestPath())) {
             proxyRequestsCDI(exchange);
             return;
         }

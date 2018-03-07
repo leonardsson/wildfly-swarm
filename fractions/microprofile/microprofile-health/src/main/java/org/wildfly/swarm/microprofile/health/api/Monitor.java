@@ -65,4 +65,6 @@ public interface Monitor {
      */
     long getProbeTimeoutSeconds();
 
+    String getContextPath();
+
 }

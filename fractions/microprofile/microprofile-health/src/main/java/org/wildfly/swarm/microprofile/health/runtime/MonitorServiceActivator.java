@@ -39,6 +39,8 @@ import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceRegistryException;
 import org.jboss.msc.service.ServiceTarget;
 import org.wildfly.swarm.microprofile.health.api.Monitor;
+import org.wildfly.swarm.spi.api.Defaultable;
+import org.wildfly.swarm.spi.api.annotations.Configurable;
 import org.wildfly.swarm.microprofile.health.HealthFraction;
 
 /**
@@ -54,6 +56,9 @@ public class MonitorServiceActivator implements ServiceActivator {
     @Inject
     @Any
     Instance<HealthFraction> healthFractionInstance;
+
+    @Configurable("swarm.monitor.path")
+    Defaultable<String> contextPath = Defaultable.string("");
 
     @Override
     public void activate(ServiceActivatorContext context) throws ServiceRegistryException {
@@ -80,6 +85,8 @@ public class MonitorServiceActivator implements ServiceActivator {
                     service.getSecurityRealmInjector()
             );
         }
+
+        serviceBuilder.addInjection(service.getContextPathInjector(), contextPath.get());
 
         serviceBuilder.setInitialMode(ServiceController.Mode.ACTIVE)
                 .install();

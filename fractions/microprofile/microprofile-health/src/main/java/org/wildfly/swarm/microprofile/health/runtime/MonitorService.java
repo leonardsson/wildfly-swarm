@@ -203,6 +203,11 @@ public class MonitorService implements Monitor, Service<MonitorService> {
 
     }
 
+    @Override
+    public String getContextPath() {
+        return contextPathValue.getValue();
+    }
+
     private static ModelNode unwrap(ModelNode response) {
         if (response.get(OUTCOME).asString().equals(SUCCESS)) {
             return response.get(RESULT);
@@ -213,6 +218,10 @@ public class MonitorService implements Monitor, Service<MonitorService> {
 
     public Injector<ServerEnvironment> getServerEnvironmentInjector() {
         return this.serverEnvironmentValue;
+    }
+
+    public Injector<String> getContextPathInjector() {
+        return this.contextPathValue;
     }
 
     public Injector<ModelController> getModelControllerInjector() {
@@ -230,6 +239,8 @@ public class MonitorService implements Monitor, Service<MonitorService> {
     private final InjectedValue<ModelController> modelControllerValue = new InjectedValue<ModelController>();
 
     private final InjectedValue<SecurityRealm> securityRealmServiceValue = new InjectedValue<SecurityRealm>();
+
+    private final InjectedValue<String> contextPathValue = new InjectedValue<String>();
 
     private final Optional<String> securityRealm;
 
